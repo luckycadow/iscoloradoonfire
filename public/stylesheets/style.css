@@ -11,9 +11,11 @@ h1 {
   text-align: center; }
 
 ul.fires {
-  list-style: none; }
+  list-style: none;
+  margin: 0;
+  padding: 0; }
   ul.fires li {
-    padding: 20px; }
+    padding: 20px 0; }
   ul.fires h3 {
     margin: 0;
     padding: 5px 0; }
