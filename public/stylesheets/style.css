@@ -1,8 +1,23 @@
 body {
   padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif; }
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  color: #333; }
 
-a {
-  color: #00B7FF; }
+.container {
+  max-width: 1200px;
+  margin: 0 auto; }
+
+h1 {
+  text-align: center; }
+
+ul.fires {
+  list-style: none; }
+  ul.fires li {
+    padding: 20px; }
+  ul.fires h3 {
+    margin: 0;
+    padding: 5px 0; }
+    ul.fires h3 a {
+      color: #333; }
 
 /*# sourceMappingURL=style.css.map */
