@@ -16,6 +16,12 @@
 </div>
 <script>
 
+    var fires = [
+        {{#each fires}}
+        { title: '{{this.title}}', lat: {{this.lat}}, long: {{this.long}} },
+        {{/each}}
+    ];
+
     function initMap() {
 
         var map = new google.maps.Map(document.getElementById('map'), {
@@ -24,13 +30,23 @@
             mapTypeId: 'roadmap'
         });
 
-        {{#each fires}}
-        new google.maps.Marker({
-            position: new google.maps.LatLng({{this.lat}}, {{this.long}}),
-            icon: '/images/fire-icon.svg',
-            map: map
+        fires.forEach(function(fire) {
+
+            var infowindow = new google.maps.InfoWindow({
+                content: fire.title
+            });
+
+            var marker = new google.maps.Marker({
+                position: new google.maps.LatLng(fire.lat, fire.long),
+                icon: '/images/fire-icon.svg',
+                map: map
+            });
+
+            marker.addListener('click', function() {
+
+                infowindow.open(map, marker);
+            });
         });
-        {{/each}}
     }
 
 </script>
