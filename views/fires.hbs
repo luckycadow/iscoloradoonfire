@@ -1,0 +1,36 @@
+<div class="fires">
+    <div class="header">
+        <h1>{{title}}</h1>
+        <div id='map'></div>
+    </div>
+    <ul class="fires-list">
+        {{#each fires}}
+            <li>
+                <h3><a href="{{this.link}}">{{this.title}}</a></h3>
+                <div class="description">
+                    {{this.description}}
+                </div>
+            </li>
+        {{/each}}
+    </ul>
+</div>
+<script>
+
+    function initMap() {
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 7,
+            center: new google.maps.LatLng(39, -105.53),
+            mapTypeId: 'roadmap'
+        });
+
+        {{#each fires}}
+        new google.maps.Marker({
+            position: new google.maps.LatLng({{this.lat}}, {{this.long}}),
+            icon: '/images/fire-icon.svg',
+            map: map
+        });
+        {{/each}}
+    }
+
+</script>

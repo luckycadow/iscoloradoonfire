@@ -34,9 +34,11 @@ loadFires();
 /* GET home page. */
 router.get('/', function(req, res, next) {
 
-  console.log(fires);
-  const title = fires.length ? 'Yes, Colorado is on fire' : 'No, Colorado is not on fire';
-  res.render('index', { title, fires });
+  if (fires.length) {
+    res.render('fires', { fires, title: 'Yes, Colorado is on fire' });
+  } else {
+    res.render('nofires', { title: 'No, Colorado is not on fire' });
+  }
 });
 
 module.exports = router;
