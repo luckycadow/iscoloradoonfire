@@ -27,6 +27,7 @@ const Map: React.FC<MapProps> = ({ fires, selectedFire }) => {
 
     fires.forEach((fire) => {
       const element = new Image(24, 24);
+      element.alt = fire.title;
       element.src = '/fire.svg';
       const popup = new mapbox.Popup({
         closeButton: false,
