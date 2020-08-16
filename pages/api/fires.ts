@@ -1,8 +1,10 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import axios from 'axios';
 import { parseStringPromise } from 'xml2js';
+import { NextApiResponse, NextApiRequest } from 'next';
 
 export interface Fire {
+  id: number;
   title: string;
   description: string;
   link: string;
@@ -24,6 +26,7 @@ const isInColorado = (fire: Fire): boolean => {
 };
 
 const parseFire = (fire: any): Fire => ({
+  id: parseInt(fire.guid[0]._.replace(/[\D]/g, '')),
   title: fire.title[0],
   description: fire.description
     ? fire.description[0]
@@ -45,8 +48,9 @@ export const loadFires = async (): Promise<Fire[]> => {
   return fires;
 };
 
-export default async (req, res) => {
+export default async (req: NextApiRequest, res: NextApiResponse) => {
   const fires = await loadFires();
   res.statusCode = 200;
+  res.setHeader('cache-control', 's-maxage=3600');
   res.json(fires);
 };

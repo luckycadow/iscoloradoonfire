@@ -1,6 +1,5 @@
-import React, { useLayoutEffect } from 'react';
+import React, { useLayoutEffect, useEffect, useRef } from 'react';
 import mapbox from 'mapbox-gl/dist/mapbox-gl.js';
-import Head from 'next/head';
 import styles from '../styles/Map.module.scss';
 import { Fire } from '../pages/api/fires';
 
@@ -9,13 +8,19 @@ mapbox.accessToken =
 
 export interface MapProps {
   fires: Fire[];
+  selectedFire?: Fire;
 }
 
-const Map: React.FC<MapProps> = ({ fires }) => {
+const Map: React.FC<MapProps> = ({ fires, selectedFire }) => {
+  const markers = useRef<mapboxgl.Marker[]>([]);
+
   useLayoutEffect(() => {
     const map = new mapbox.Map({
-      center: [-105.44100493749113, 38.97337437873844],
-      zoom: 6,
+      bounds: [
+        [-102.03, 37],
+        [-109.03, 41],
+      ],
+      fitBoundsOptions: { padding: 15 },
       container: 'mapbox-map',
       style: 'mapbox://styles/mapbox/streets-v11',
     });
@@ -27,29 +32,31 @@ const Map: React.FC<MapProps> = ({ fires }) => {
         closeButton: false,
         offset: 15,
       }).setHTML(`<h4>${fire.title}</h4>`);
-      new mapbox.Marker({ element })
+      const marker = new mapbox.Marker({ element })
         .setLngLat([fire.longitude, fire.latitude])
         .setPopup(popup)
         .addTo(map);
+      marker.id = fire.id;
+      markers.current.push(marker);
     });
-
-    /* Used to get the coordinates of the map visually centered
-    map.on('dragend', function () {
-      console.log(map.getCenter());
-    });
-    */
   }, []);
 
+  useEffect(() => {
+    markers.current.forEach((m) => {
+      const popup = m.getPopup();
+      if (selectedFire?.id === (m as any).id && !popup.isOpen()) {
+        m.togglePopup();
+      } else if (popup.isOpen()) {
+        m.togglePopup();
+      }
+    });
+  }, [selectedFire]);
+
   return (
-    <>
-      <Head key="mapbox">
-        <link
-          href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css"
-          rel="stylesheet"
-        />
-      </Head>
+    <div className={styles['map-container']}>
       <div id="mapbox-map" className={styles.map}></div>
-    </>
+      <div className={styles.fade}></div>
+    </div>
   );
 };
 

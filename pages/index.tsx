@@ -37,12 +37,14 @@ const Home: React.FC = () => {
   }
 
   return (
-    <Container className={styles.container}>
-      <Header textAlign="center" as="h1">
-        Yes, Colorado is on fire.
-      </Header>
+    <>
+      <Container className={styles.container}>
+        <Header textAlign="center" as="h1">
+          Yes, Colorado is on fire.
+        </Header>
+      </Container>
       <Fires fires={fires} />
-    </Container>
+    </>
   );
 };
 
