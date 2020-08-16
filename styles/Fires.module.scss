@@ -2,7 +2,7 @@
   margin: 1px; // This prevents the card border from showing under the map
   margin-bottom: 2rem;
 
-  // This presents the layout from breaking when someone at a fire department rolls thier face on the keyboard
+  // This prevents the layout from breaking when someone at a fire department rolls thier face on the keyboard
   * {
     overflow: hidden;
   }
