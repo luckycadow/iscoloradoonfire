@@ -4,7 +4,7 @@ import styles from '../styles/Map.module.scss';
 import { Fire } from '../pages/api/fires';
 
 mapbox.accessToken =
-  'pk.eyJ1IjoibHVja3ljYWRvdyIsImEiOiJjajMzaGh2aDQwMDZyMzJydW4ydnZjOHc4In0.NdM9UHVLDzOD_9lxhwCDhw';
+  'pk.eyJ1IjoibHVja3ljYWRvdyIsImEiOiJjams2eDJndHAwdXF6M3dwMHl1a2lydnZwIn0._P7S1N2ooWDlN5Ohxz9RgA';
 
 export interface MapProps {
   fires: Fire[];
