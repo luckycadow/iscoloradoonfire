@@ -10,7 +10,7 @@ export interface Fire {
   longitude: number;
 }
 
-const cleanTitle  = (title: string): string => title.replace(/\(wildfire\)/gi, '');
+const cleanTitle  = (title: string): string => title.replace(/\(wildfire\)/gi, '').trim();
 
 const isWildfire = (fire: Fire): boolean => {
   return fire.title.toLowerCase().includes('(wildfire)');
@@ -47,7 +47,7 @@ export const loadFires = async (): Promise<Fire[]> => {
   for (const item of feed.rss.channel[0].item) {
     console.log(item)
     const fire = parseFire(item);
-    if (isWildfire(fire)) {    
+    if (isWildfire(fire) && isInColorado(fire)) {    
       fires.push({
         ...fire,
         title: cleanTitle(fire.title),
