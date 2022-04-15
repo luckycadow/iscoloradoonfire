@@ -41,7 +41,7 @@ export const loadFires = async (): Promise<Fire[]> => {
 
   const fires = feed.rss.channel[0].item
     .map(parseFire)
-    //.filter(isInColorado)
+    .filter(isInColorado)
     .filter(isWildfire);
 
   return fires;
