@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
     "axios": "^0.26.1",
@@ -20,6 +21,29 @@
     "@types/mapbox-gl": "^1.11.1",
     "@types/node": "^14.0.27",
     "@types/react": "^16.9.46",
+    "eslint": "8.13.0",
+    "eslint-config-next": "12.1.5",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
     "typescript": "^4.6.0"
+  },
+  "eslintConfig": {
+    "extends": [
+      "next/core-web-vitals",
+      "prettier"
+    ],
+    "plugins": [
+      "prettier"
+    ],
+    "rules": {
+      "prettier/prettier": [
+        "error"
+      ]
+    }
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "none"
   }
 }

@@ -1,13 +1,13 @@
-import { useEffect } from 'react';
-import styled from 'styled-components';
-import Fires from '../components/Fires';
-import { COLORS } from '../constants/theme';
-import { Fire, loadFires } from '../utils/fires';
-
+import { useEffect } from 'react'
+import styled from 'styled-components'
+import Fires from '../components/Fires'
+import { COLORS } from '../constants/theme'
+import { Fire, loadFires } from '../utils/fires'
 
 const StyledContainer = styled.div<{ $fire: boolean }>`
   color: ${COLORS.text};
-  background: ${({ $fire }) => $fire ? COLORS.fireBackground : COLORS.defaultBackground};
+  background: ${({ $fire }) =>
+    $fire ? COLORS.fireBackground : COLORS.defaultBackground};
   padding-top: 2rem;
   padding-bottom: 2rem;
   min-height: 100%;
@@ -28,41 +28,36 @@ const StyledNoFires = styled.div`
 `
 
 const Home: React.FC<{ fires: Fire[] }> = ({ fires }) => {
-
-  useEffect(() => { 
+  useEffect(() => {
     if (fires.length) {
-      document.body.style.background = COLORS.fireBackground;
+      document.body.style.background = COLORS.fireBackground
     }
-  }, []);
+  }, [fires])
 
   if (!fires.length) {
     return (
       <StyledContainer>
         <StyledNoFires>
-          <StyledHeader>
-            YAY! Colorado is not on fire.
-          </StyledHeader>
+          <StyledHeader>YAY! Colorado is not on fire.</StyledHeader>
         </StyledNoFires>
       </StyledContainer>
-    );
+    )
   }
 
   return (
-      <StyledContainer $fire>
-        <StyledHeader>
-          Yes, Colorado is on fire.
-        </StyledHeader>
-        <Fires fires={fires} />
-      </StyledContainer>
-  );
-};
+    <StyledContainer $fire>
+      <StyledHeader>Yes, Colorado is on fire.</StyledHeader>
+      <Fires fires={fires} />
+    </StyledContainer>
+  )
+}
 
-export default Home;
+export default Home
 
 export async function getServerSideProps() {
   return {
     props: {
       fires: await loadFires()
-    },
+    }
   }
 }

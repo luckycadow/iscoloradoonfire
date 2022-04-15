@@ -1,9 +1,8 @@
-import { useState } from 'react';
+import { useState } from 'react'
 import styled from 'styled-components'
-import Map from './Map';
-import { Fire } from '../utils/fires';
-import { COLORS } from '../constants/theme';
-
+import Map from './Map'
+import { Fire } from '../utils/fires'
+import { COLORS } from '../constants/theme'
 
 const StyledContainer = styled.div`
   margin: 0 auto;
@@ -32,11 +31,11 @@ const StyledDescription = styled.div`
 `
 
 export interface FiresProps {
-  fires: Fire[];
+  fires: Fire[]
 }
 
 const Fires: React.FC<FiresProps> = ({ fires }) => {
-  const [selectedFire, setSelectedFire] = useState<Fire | null>();
+  const [selectedFire, setSelectedFire] = useState<Fire | null>()
 
   return (
     <>
@@ -54,7 +53,7 @@ const Fires: React.FC<FiresProps> = ({ fires }) => {
         ))}
       </StyledContainer>
     </>
-  );
-};
+  )
+}
 
-export default Fires;
+export default Fires

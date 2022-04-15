@@ -1,12 +1,12 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react'
 import styled from 'styled-components'
-import mapbox from 'mapbox-gl/dist/mapbox-gl.js';
-import { Fire } from '../utils/fires';
-import { Fade } from './Fade';
-import { COLORS } from '../constants/theme';
+import mapbox from 'mapbox-gl/dist/mapbox-gl.js'
+import { Fire } from '../utils/fires'
+import { Fade } from './Fade'
+import { COLORS } from '../constants/theme'
 
 mapbox.accessToken =
-  'pk.eyJ1IjoibHVja3ljYWRvdyIsImEiOiJjams2eDJndHAwdXF6M3dwMHl1a2lydnZwIn0._P7S1N2ooWDlN5Ohxz9RgA';
+  'pk.eyJ1IjoibHVja3ljYWRvdyIsImEiOiJjams2eDJndHAwdXF6M3dwMHl1a2lydnZwIn0._P7S1N2ooWDlN5Ohxz9RgA'
 
 const StyledMapContainer = styled.div`
   position: sticky;
@@ -22,58 +22,60 @@ const StyledMap = styled.div`
 `
 
 export interface MapProps {
-  fires: Fire[];
-  selectedFire?: Fire;
+  fires: Fire[]
+  selectedFire?: Fire
 }
 
 const Map: React.FC<MapProps> = ({ fires, selectedFire }) => {
-  const markers = useRef<mapboxgl.Marker[]>([]);
+  const markers = useRef<mapboxgl.Marker[]>([])
 
   useEffect(() => {
     const map = new mapbox.Map({
       bounds: [
         [-102.03, 37],
-        [-109.03, 41],
+        [-109.03, 41]
       ],
       fitBoundsOptions: { padding: 15 },
       container: 'mapbox-map',
-      style: 'mapbox://styles/mapbox/streets-v11',
-    });
+      style: 'mapbox://styles/mapbox/streets-v11'
+    })
 
     fires.forEach((fire) => {
-      const element = new Image(24, 24);
-      element.alt = fire.title;
-      element.src = '/fire.svg';
+      const element = new Image(24, 24)
+      element.alt = fire.title
+      element.src = '/fire.svg'
       const popup = new mapbox.Popup({
         closeButton: false,
-        offset: 15,
-      }).setHTML(`<h4>${fire.title}</h4>`);
+        offset: 15
+      }).setHTML(`<h4>${fire.title}</h4>`)
       const marker = new mapbox.Marker({ element })
         .setLngLat([fire.longitude, fire.latitude])
         .setPopup(popup)
-        .addTo(map);
-      marker.id = fire.id;
-      markers.current.push(marker);
-    });
-  }, []);
+        .addTo(map)
+      marker.id = fire.id
+      markers.current.push(marker)
+    })
+
+    return map.remove
+  }, [fires])
 
   useEffect(() => {
     markers.current.forEach((m) => {
-      const popup = m.getPopup();
+      const popup = m.getPopup()
       if (selectedFire?.id === (m as any).id && !popup.isOpen()) {
-        m.togglePopup();
+        m.togglePopup()
       } else if (popup.isOpen()) {
-        m.togglePopup();
+        m.togglePopup()
       }
-    });
-  }, [selectedFire]);
+    })
+  }, [selectedFire])
 
   return (
     <StyledMapContainer>
       <StyledMap id="mapbox-map"></StyledMap>
       <Fade />
     </StyledMapContainer>
-  );
-};
+  )
+}
 
-export default Map;
+export default Map

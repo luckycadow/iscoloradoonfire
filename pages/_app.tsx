@@ -1,6 +1,6 @@
-import Head from 'next/head';
-import { createGlobalStyle } from 'styled-components';
-import { COLORS } from '../constants/theme';
+import Head from 'next/head'
+import { createGlobalStyle } from 'styled-components'
+import { COLORS } from '../constants/theme'
 
 const GlobalStyle = createGlobalStyle`
   html,
@@ -31,10 +31,9 @@ const GlobalStyle = createGlobalStyle`
   }
 `
 
-
 function MyApp({ Component, pageProps }) {
   return (
-    <>      
+    <>
       <Head>
         <title>Is Colorado on Fire?</title>
         <meta
@@ -42,13 +41,15 @@ function MyApp({ Component, pageProps }) {
           content="Is Colorado on fire? Almost definitely, but now you can know for sure."
         />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <link href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css" rel="stylesheet"
+        <link
+          href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css"
+          rel="stylesheet"
         />
       </Head>
       <GlobalStyle />
       <Component {...pageProps} />
     </>
-  );
+  )
 }
 
-export default MyApp;
+export default MyApp
