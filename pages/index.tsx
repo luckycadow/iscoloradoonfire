@@ -1,51 +1,58 @@
-import React, { useState, useEffect } from 'react';
-import { Container, Loader, Header } from 'semantic-ui-react';
-import { Fire } from './api/fires';
-import axios from 'axios';
+import styled from 'styled-components';
 import Fires from '../components/Fires';
-import styles from '../styles/Home.module.scss';
+import { Fire, loadFires } from '../utils/fires';
 
-const Home: React.FC = () => {
-  const [loading, setLoading] = useState<boolean>(true);
-  const [fires, setFires] = useState<Fire[]>([]);
 
-  useEffect(() => {
-    axios.get('/api/fires').then((res) => {
-      setFires(res.data);
-      setLoading(false);
-    });
-  }, []);
+const StyledContainer = styled.div`
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 
-  if (loading) {
-    return (
-      <Container>
-        <Loader active />
-      </Container>
-    );
+  @media only screen and (max-width: 600px) {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
   }
+`
+
+const StyledHeader = styled.h1`
+text-align: center;
+`
+
+const StyledNoFires = styled.div`
+  margin-top: 40vh;
+`
+
+const Home: React.FC<{ fires: Fire[] }> = ({ fires }) => {
 
   if (!fires.length) {
     return (
-      <Container className={styles.container}>
-        <div className={styles['no-fires']}>
-          <Header textAlign="center" as="h1">
+      <StyledContainer>
+        <StyledNoFires>
+          <StyledHeader>
             YAY! Colorado is not on fire.
-          </Header>
-        </div>
-      </Container>
+          </StyledHeader>
+        </StyledNoFires>
+      </StyledContainer>
     );
   }
 
   return (
     <>
-      <Container className={styles.container}>
-        <Header textAlign="center" as="h1">
+      <StyledContainer>
+        <StyledHeader>
           Yes, Colorado is on fire.
-        </Header>
-      </Container>
+        </StyledHeader>
+      </StyledContainer>
       <Fires fires={fires} />
     </>
   );
 };
 
 export default Home;
+
+export async function getServerSideProps() {
+  return {
+    props: {
+      fires: await loadFires()
+    },
+  }
+}

@@ -1,10 +1,26 @@
-import React, { useLayoutEffect, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
+import styled from 'styled-components'
 import mapbox from 'mapbox-gl/dist/mapbox-gl.js';
-import styles from '../styles/Map.module.scss';
-import { Fire } from '../pages/api/fires';
+import { Fire } from '../utils/fires';
+import { Fade } from './Fade';
 
 mapbox.accessToken =
   'pk.eyJ1IjoibHVja3ljYWRvdyIsImEiOiJjams2eDJndHAwdXF6M3dwMHl1a2lydnZwIn0._P7S1N2ooWDlN5Ohxz9RgA';
+
+const StyledMapContainer = styled.div`
+  position: sticky;
+  top: 0;
+  z-index: 100;
+`
+
+const StyledMap = styled.div`
+  width: 100%;
+  height: 40vh;
+
+  @media only screen and (max-width: 600px) {
+    margin-top: 1rem;
+  }
+`
 
 export interface MapProps {
   fires: Fire[];
@@ -14,7 +30,7 @@ export interface MapProps {
 const Map: React.FC<MapProps> = ({ fires, selectedFire }) => {
   const markers = useRef<mapboxgl.Marker[]>([]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const map = new mapbox.Map({
       bounds: [
         [-102.03, 37],
@@ -54,10 +70,10 @@ const Map: React.FC<MapProps> = ({ fires, selectedFire }) => {
   }, [selectedFire]);
 
   return (
-    <div className={styles['map-container']}>
-      <div id="mapbox-map" className={styles.map}></div>
-      <div className={styles.fade}></div>
-    </div>
+    <StyledMapContainer>
+      <StyledMap id="mapbox-map"></StyledMap>
+      <Fade />
+    </StyledMapContainer>
   );
 };
 
