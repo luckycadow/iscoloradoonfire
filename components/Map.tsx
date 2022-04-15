@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import mapbox from 'mapbox-gl/dist/mapbox-gl.js';
 import { Fire } from '../utils/fires';
 import { Fade } from './Fade';
+import { COLORS } from '../constants/theme';
 
 mapbox.accessToken =
   'pk.eyJ1IjoibHVja3ljYWRvdyIsImEiOiJjams2eDJndHAwdXF6M3dwMHl1a2lydnZwIn0._P7S1N2ooWDlN5Ohxz9RgA';
@@ -17,6 +18,7 @@ const StyledMapContainer = styled.div`
 const StyledMap = styled.div`
   width: 100%;
   height: 40vh;
+  color: ${COLORS.darkText};
 `
 
 export interface MapProps {
