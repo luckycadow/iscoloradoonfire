@@ -1,20 +1,26 @@
+import { useEffect } from 'react';
 import styled from 'styled-components';
 import Fires from '../components/Fires';
+import { COLORS } from '../constants/theme';
 import { Fire, loadFires } from '../utils/fires';
 
 
-const StyledContainer = styled.div`
-  margin-top: 2rem;
-  margin-bottom: 2rem;
+const StyledContainer = styled.div<{ $fire: boolean }>`
+  color: ${COLORS.text};
+  background: ${({ $fire }) => $fire ? COLORS.fireBackground : COLORS.defaultBackground};
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  min-height: 100%;
 
   @media only screen and (max-width: 600px) {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
   }
 `
 
 const StyledHeader = styled.h1`
-text-align: center;
+  text-align: center;
+  padding-bottom: 1rem;
 `
 
 const StyledNoFires = styled.div`
@@ -22,6 +28,12 @@ const StyledNoFires = styled.div`
 `
 
 const Home: React.FC<{ fires: Fire[] }> = ({ fires }) => {
+
+  useEffect(() => { 
+    if (fires.length) {
+      document.body.style.background = COLORS.fireBackground;
+    }
+  }, []);
 
   if (!fires.length) {
     return (
@@ -36,14 +48,12 @@ const Home: React.FC<{ fires: Fire[] }> = ({ fires }) => {
   }
 
   return (
-    <>
-      <StyledContainer>
+      <StyledContainer $fire>
         <StyledHeader>
           Yes, Colorado is on fire.
         </StyledHeader>
+        <Fires fires={fires} />
       </StyledContainer>
-      <Fires fires={fires} />
-    </>
   );
 };
 

@@ -11,15 +11,12 @@ const StyledMapContainer = styled.div`
   position: sticky;
   top: 0;
   z-index: 100;
+  padding-top: 1rem;
 `
 
 const StyledMap = styled.div`
   width: 100%;
   height: 40vh;
-
-  @media only screen and (max-width: 600px) {
-    margin-top: 1rem;
-  }
 `
 
 export interface MapProps {

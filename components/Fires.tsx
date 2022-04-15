@@ -2,6 +2,7 @@ import { useState } from 'react';
 import styled from 'styled-components'
 import Map from './Map';
 import { Fire } from '../utils/fires';
+import { COLORS } from '../constants/theme';
 
 
 const StyledContainer = styled.div`
@@ -21,8 +22,13 @@ const StyledCard = styled.div`
   }
 
   &:hover {
-    background: #f5f5f5;
+    background: ${COLORS.cardHighlight};
   }
+`
+
+const StyledDescription = styled.div`
+  padding-top: 0.5rem;
+  line-height: 1.5em;
 `
 
 export interface FiresProps {
@@ -43,8 +49,7 @@ const Fires: React.FC<FiresProps> = ({ fires }) => {
             onMouseOut={() => setSelectedFire(null)}
           >
             <h2>{fire.title}</h2>
-            <small>{`${fire.latitude.toFixed(2)}, ${fire.longitude.toFixed(2)}`}</small>
-            <p>{fire.description}</p>            
+            <StyledDescription>{fire.description}</StyledDescription>
           </StyledCard>
         ))}
       </StyledContainer>

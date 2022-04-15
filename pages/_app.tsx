@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import { createGlobalStyle } from 'styled-components';
+import { COLORS } from '../constants/theme';
 
 const GlobalStyle = createGlobalStyle`
   html,
@@ -11,10 +12,12 @@ const GlobalStyle = createGlobalStyle`
       Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   }
 
+  body {
+    background: ${COLORS.defaultBackground};
+  }
+
   #__next {
     height: 100%;
-    position: relative;
-    overflow: auto;
   }
 
   a {

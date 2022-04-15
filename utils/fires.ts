@@ -10,6 +10,8 @@ export interface Fire {
   longitude: number;
 }
 
+const cleanTitle  = (title: string): string => title.replace(/\(wildfire\)/gi, '');
+
 const isWildfire = (fire: Fire): boolean => {
   return fire.title.toLowerCase().includes('(wildfire)');
 };
@@ -33,16 +35,25 @@ const parseFire = (fire: any): Fire => ({
   link: fire.link[0],
   latitude: parseFloat(fire['geo:lat'][0]),
   longitude: parseFloat(fire['geo:long'][0]),
+  
 });
 
 export const loadFires = async (): Promise<Fire[]> => {
   const res = await axios.get('https://inciweb.nwcg.gov/feeds/rss/incidents/');
   const feed = await parseStringPromise(res.data, null);
 
-  const fires = feed.rss.channel[0].item
-    .map(parseFire)
-    .filter(isInColorado)
-    .filter(isWildfire);
+
+  const fires = []
+  for (const item of feed.rss.channel[0].item) {
+    console.log(item)
+    const fire = parseFire(item);
+    if (isWildfire(fire)) {    
+      fires.push({
+        ...fire,
+        title: cleanTitle(fire.title),
+      })
+    }
+  }
 
   return fires;
 };
