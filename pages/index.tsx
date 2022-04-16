@@ -4,11 +4,10 @@ import Fires from '../components/Fires'
 import { COLORS } from '../constants/theme'
 import { Fire, loadFires } from '../utils/fires'
 
-const StyledContainer = styled.div<{ $fire: boolean }>`
+const StyledContainer = styled.div<{ $fire: boolean; $bg: string }>`
   color: ${COLORS.text};
-  background: ${({ $fire }) =>
-    $fire ? COLORS.fireBackground : COLORS.defaultBackground};
-  padding-top: 2rem;
+  background: ${({ $bg }) => $bg};
+  padding-top: ${({ $fire }) => ($fire ? '2rem' : '40vh')};
   padding-bottom: 2rem;
   min-height: 100%;
 
@@ -23,31 +22,23 @@ const StyledHeader = styled.h1`
   padding-bottom: 1rem;
 `
 
-const StyledNoFires = styled.div`
-  margin-top: 40vh;
-`
-
 const Home: React.FC<{ fires: Fire[] }> = ({ fires }) => {
-  useEffect(() => {
-    if (fires.length) {
-      document.body.style.background = COLORS.fireBackground
-    }
-  }, [fires])
+  const onFire = fires.length > 0
+  const bg = onFire ? COLORS.fireBackground : COLORS.defaultBackground
 
-  if (!fires.length) {
-    return (
-      <StyledContainer>
-        <StyledNoFires>
-          <StyledHeader>YAY! Colorado is not on fire.</StyledHeader>
-        </StyledNoFires>
-      </StyledContainer>
-    )
-  }
+  useEffect(() => {
+    // This is to properly color the toolbar in Safari
+    document.body.style.background = bg
+  }, [bg])
+
+  const text = onFire
+    ? 'Yes, Colorado is on fire.'
+    : 'YAY! Colorado is not on fire.'
 
   return (
-    <StyledContainer $fire>
-      <StyledHeader>Yes, Colorado is on fire.</StyledHeader>
-      <Fires fires={fires} />
+    <StyledContainer $fire={onFire} $bg={bg}>
+      <StyledHeader>{text}</StyledHeader>
+      {onFire && <Fires fires={fires} />}
     </StyledContainer>
   )
 }
@@ -55,9 +46,6 @@ const Home: React.FC<{ fires: Fire[] }> = ({ fires }) => {
 export default Home
 
 export async function getServerSideProps() {
-  return {
-    props: {
-      fires: await loadFires()
-    }
-  }
+  const fires = await loadFires()
+  return { props: { fires } }
 }

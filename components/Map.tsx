@@ -2,7 +2,6 @@ import { useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import mapbox from 'mapbox-gl/dist/mapbox-gl.js'
 import { Fire } from '../utils/fires'
-import { Fade } from './Fade'
 import { COLORS } from '../constants/theme'
 
 mapbox.accessToken =
@@ -19,6 +18,11 @@ const StyledMap = styled.div`
   width: 100%;
   height: 40vh;
   color: ${COLORS.darkText};
+`
+
+const StyledFade = styled.div`
+  height: 3rem;
+  background: linear-gradient(${COLORS.fireBackground}, rgba(255, 255, 255, 0));
 `
 
 export interface MapProps {
@@ -73,7 +77,7 @@ const Map: React.FC<MapProps> = ({ fires, selectedFire }) => {
   return (
     <StyledMapContainer>
       <StyledMap id="mapbox-map"></StyledMap>
-      <Fade />
+      <StyledFade />
     </StyledMapContainer>
   )
 }
