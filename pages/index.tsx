@@ -10,16 +10,11 @@ const StyledContainer = styled.div<{ $fire: boolean; $bg: string }>`
   padding-top: ${({ $fire }) => ($fire ? '2rem' : '40vh')};
   padding-bottom: 2rem;
   min-height: 100%;
-
-  @media only screen and (max-width: 600px) {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-  }
 `
 
 const StyledHeader = styled.h1`
   text-align: center;
-  padding-bottom: 1rem;
+  padding: 1rem;
 `
 
 const Home: React.FC<{ fires: Fire[] }> = ({ fires }) => {
