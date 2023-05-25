@@ -1,6 +1,6 @@
 import type { Fire } from './fires'
 
-export const ACTIVE_CLASSES = ['outline', 'z-50'] as const
+export const ACTIVE_CLASSES = ['outline', 'z-20'] as const
 
 export function focusFire(id: string) {
   const marker = document.getElementById(getMarkerId(id))
