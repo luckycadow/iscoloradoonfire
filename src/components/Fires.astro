@@ -37,7 +37,6 @@ const { fires } = Astro.props
     (entries) => {
       entries.forEach((entry) => {
         const card = entry.target as HTMLDivElement | null
-        console.log({ entry, card })
         const fireId = card?.dataset.fireId
         if (entry.intersectionRatio === 1 && fireId) {
           focusFire(fireId)
