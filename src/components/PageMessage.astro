@@ -1,0 +1,13 @@
+---
+export interface Props {
+  message: string
+}
+
+const { message } = Astro.props
+---
+
+<main
+  class="prose lg:prose-xl flex items-center justify-center mx-auto min-h-full pb-6"
+>
+  <h1 class="text-center px-2">{message}</h1>
+</main>

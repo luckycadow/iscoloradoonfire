@@ -1,0 +1,56 @@
+---
+import type { Fire } from '../utils/fires'
+
+export interface Props {
+  fires: Fire[]
+}
+
+const { fires } = Astro.props
+---
+
+<link
+  href="https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css"
+  rel="stylesheet"
+/>
+<div class="absolute bottom-0 top-0 right-0 left-0">
+  <div id="map" data-fires={JSON.stringify(fires)} class="w-full h-full"></div>
+</div>
+<script>
+  import mapboxgl from 'mapbox-gl'
+  import type { Fire } from '../utils/fires'
+  import { createMarkerImage } from '../utils/interaction'
+
+  mapboxgl.accessToken =
+    'pk.eyJ1IjoibHVja3ljYWRvdyIsImEiOiJja2lqMmZycTkwcmxrMnJ1ZnhnY3d5YmdrIn0.w9HXsKVi4YAI5BrlDP43hQ' //'pk.eyJ1IjoibHVja3ljYWRvdyIsImEiOiJjams2eDJndHAwdXF6M3dwMHl1a2lydnZwIn0._P7S1N2ooWDlN5Ohxz9RgA'
+
+  const container = document.getElementById('map') as HTMLElement
+  const fires: Fire[] = JSON.parse(container.dataset.fires ?? '[]')
+
+  const darkModePreference = window.matchMedia('(prefers-color-scheme: dark)')
+
+  const map = new mapboxgl.Map({
+    container,
+    bounds: [
+      [-102.03, 37],
+      [-109.03, 41]
+    ],
+    fitBoundsOptions: { padding: 150 },
+    style: getMapStyle(darkModePreference.matches)
+  })
+
+  fires?.forEach((fire, index) => {
+    new mapboxgl.Marker(createMarkerImage(fire, !index))
+      .setLngLat([fire.longitude, fire.latitude])
+      .addTo(map)
+  })
+
+  darkModePreference.addEventListener('change', (e) =>
+    map.setStyle(getMapStyle(e.matches))
+  )
+
+  function getMapStyle(dark: boolean): string {
+    return dark
+      ? 'mapbox://styles/mapbox/navigation-night-v1'
+      : 'mapbox://styles/mapbox/streets-v12'
+  }
+</script>
