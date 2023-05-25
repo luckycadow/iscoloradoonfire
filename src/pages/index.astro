@@ -1,8 +1,8 @@
 ---
-import Layout from '../layouts/Layout.astro'
-import { loadFires } from '../utils/fires'
-import Fires from '../components/Fires.astro'
-import PageMessage from '../components/PageMessage.astro'
+import Layout from '@layouts/Layout.astro'
+import { loadFires } from '@utils/fires'
+import Fires from '@components/Fires.astro'
+import PageMessage from '@components/PageMessage.astro'
 
 const fires = await loadFires()
 const onFire = Boolean(fires.length)
