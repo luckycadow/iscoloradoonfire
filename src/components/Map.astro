@@ -34,7 +34,9 @@ const { fires } = Astro.props
       [-102.03, 37],
       [-109.03, 41]
     ],
-    fitBoundsOptions: { padding: 150 },
+    fitBoundsOptions: {
+      padding: { top: 25, right: 25, left: 25, bottom: 150 }
+    },
     style: getMapStyle(darkModePreference.matches)
   })
 
