@@ -13,7 +13,10 @@ const { fire } = Astro.props
     class="card bg-white bg-opacity-60 backdrop-blur dark:bg-neutral rounded-box h-40 lg:h-48 z-20"
   >
     <div class="card-body">
-      <button class="btn btn-square btn-sm text-sm absolute top-4 right-4">
+      <a
+        href={fire.link}
+        class="btn btn-square btn-sm text-sm absolute top-4 right-4"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 512 512"
@@ -26,7 +29,7 @@ const { fire } = Astro.props
           >
           </path>
         </svg>
-      </button>
+      </a>
       <h2 class="card-title">{fire.title}</h2>
       <p class="overflow line-clamp-3 lg:line-clamp-4">{fire.description}</p>
     </div>
