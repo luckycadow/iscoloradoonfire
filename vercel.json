@@ -2,10 +2,12 @@
   "headers": [
     {
       "source": "/",
-      "headers": {
-        "key": "Cache-Control",
-        "value": "max-age=3600, stale-while-revalidate=43200"
-      }
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "max-age=3600, stale-while-revalidate=43200"
+        }
+      ]
     }
   ]
 }
