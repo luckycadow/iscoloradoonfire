@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 const parser = new XMLParser();
 
-export interface Fire {
+export type Fire = {
   id: number;
   title: string;
   description: string;
@@ -11,7 +11,7 @@ export interface Fire {
   latitude: number;
   longitude: number;
   state: string;
-}
+};
 
 export async function GET() {
   const res = await fetch("https://inciweb.wildfire.gov/incidents/rss.xml");

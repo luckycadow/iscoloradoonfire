@@ -1,8 +1,8 @@
 "use client";
 
-import { Fire } from "@/utils/fires";
 import mapboxgl, { Map } from "mapbox-gl";
 import { useEffect, useRef } from "react";
+import type { Fire } from "./fires/route";
 
 export default function Home() {
   const mapContainerRef = useRef<HTMLDivElement>(null);
