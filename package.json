@@ -3,47 +3,24 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
-    "axios": "^0.26.1",
-    "mapbox-gl": "^2.8.0",
-    "next": "^12.1.5",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "styled-components": "^5.3.5",
-    "xml2js": "^0.4.23"
+    "fast-xml-parser": "^5.2.5",
+    "mapbox-gl": "^3.13.0",
+    "next": "15.4.4",
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
   },
   "devDependencies": {
-    "@types/mapbox-gl": "^1.11.1",
-    "@types/node": "^14.0.27",
-    "@types/react": "^16.9.46",
-    "eslint": "8.13.0",
-    "eslint-config-next": "12.1.5",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-prettier": "^4.0.0",
-    "typescript": "^4.6.0"
-  },
-  "eslintConfig": {
-    "extends": [
-      "next/core-web-vitals",
-      "prettier"
-    ],
-    "plugins": [
-      "prettier"
-    ],
-    "rules": {
-      "prettier/prettier": [
-        "error"
-      ]
-    }
-  },
-  "prettier": {
-    "semi": false,
-    "singleQuote": true,
-    "trailingComma": "none"
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "tailwindcss": "^4",
+    "typescript": "^5"
   }
 }
