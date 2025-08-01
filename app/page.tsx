@@ -32,15 +32,13 @@ export default function Home() {
           })
             .setLngLat([fire.longitude, fire.latitude])
             .setPopup(
-              new mapboxgl.Popup()
-                .addClassName("rounded-lg p-2 text-black")
-                .setHTML(
-                  `
+              new mapboxgl.Popup().addClassName("popup").setHTML(
+                `
                     <strong>${fire.title}</strong>
-                    <p class="overflow-ellipsis line-clamp-6">${fire.description}</p>
-                    <a href="${fire.link}" target="_blank" class="text-blue-600 outline-none">More info</a>
-                  `
-                )
+                    <p>${fire.description}</p>
+                    <a href="${fire.link}" target="_blank">More info</a>
+                `
+              )
             )
             .addTo(mapRef.current!);
 
@@ -51,5 +49,5 @@ export default function Home() {
     return mapRef.current?.remove;
   }, []);
 
-  return <div className="h-full max-h-full text" ref={mapContainerRef} />;
+  return <div className="map" ref={mapContainerRef} />;
 }

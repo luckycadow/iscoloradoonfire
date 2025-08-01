@@ -3,6 +3,13 @@ import { NextResponse } from "next/server";
 
 const parser = new XMLParser();
 
+type FireItem = {
+  guid: string;
+  title: string;
+  description: string;
+  link: string;
+};
+
 export type Fire = {
   id: number;
   title: string;
@@ -10,22 +17,13 @@ export type Fire = {
   link: string;
   latitude: number;
   longitude: number;
-  state: string;
 };
 
 export async function GET() {
   const res = await fetch("https://inciweb.wildfire.gov/incidents/rss.xml");
   const text = await res.text();
   const feed = await parser.parse(text);
-  const fires = [];
-  for (const item of feed.rss.channel.item) {
-    console.log(item);
-    const fire = parseFire(item);
-    console.log(fire);
-    if (fire.state.toLowerCase() === "colorado") {
-      fires.push(fire);
-    }
-  }
+  const fires = feed.rss.channel.item.filter(isColorado).map(parseFire);
   return NextResponse.json(fires);
 }
 
@@ -37,7 +35,6 @@ function parseFire(fire: any): Fire {
       fire.description.match(/overview:([^\n]+)/i)?.[1]?.trim() ||
       "No information available.",
     link: fire.link,
-    state: fire.description.match(/state:([^\n]+)/i)?.[1]?.trim() || "Unknown",
     latitude: parseCoordinate(
       fire.description.match(/latitude:([^a-z]+)/i)?.[1] || "0"
     ),
@@ -45,6 +42,10 @@ function parseFire(fire: any): Fire {
       fire.description.match(/longitude:([^a-z]+)/i)?.[1] || "0"
     ),
   };
+}
+
+function isColorado(fire: FireItem): boolean {
+  return fire.description.toLowerCase().includes("state: colorado");
 }
 
 function parseCoordinate(text: string): number {
