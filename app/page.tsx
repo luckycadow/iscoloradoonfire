@@ -26,20 +26,24 @@ export default function Home() {
       .then((response) => response.json())
       .then((fires: Fire[]) => {
         fires.forEach((fire) => {
-          const marker = new mapboxgl.Marker({})
+          const marker = new mapboxgl.Marker({
+            element: document.createElement("div"),
+            className: "marker",
+          })
             .setLngLat([fire.longitude, fire.latitude])
-            .addTo(mapRef.current!)
             .setPopup(
               new mapboxgl.Popup()
+                .addClassName("rounded-lg p-2 text-black")
                 .setHTML(
                   `
-                  <strong>${fire.title}</strong>
-                  <p>${fire.description}</p>
-                  <a href="${fire.link}" target="_blank" class="text-blue-600 outline-none">More info</a>
+                    <strong>${fire.title}</strong>
+                    <p class="overflow-ellipsis line-clamp-6">${fire.description}</p>
+                    <a href="${fire.link}" target="_blank" class="text-blue-600 outline-none">More info</a>
                   `
                 )
-                .addClassName("rounded-lg p-2 text-black")
-            );
+            )
+            .addTo(mapRef.current!);
+
           marker.getElement();
         });
       });
