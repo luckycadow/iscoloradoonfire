@@ -13,7 +13,7 @@ export default function Home() {
 
     mapRef.current = new mapboxgl.Map({
       accessToken:
-        "pk.eyJ1IjoibHVja3ljYWRvdyIsImEiOiJja2lqMmZycTkwcmxrMnJ1ZnhnY3d5YmdrIn0.w9HXsKVi4YAI5BrlDP43hQ",
+        "pk.eyJ1IjoibHVja3ljYWRvdyIsImEiOiJjams2eDJndHAwdXF6M3dwMHl1a2lydnZwIn0._P7S1N2ooWDlN5Ohxz9RgA",
       container: mapContainerRef.current,
       bounds: [
         [-102.03, 37],
