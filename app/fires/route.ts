@@ -27,7 +27,7 @@ export async function GET() {
   return NextResponse.json(fires);
 }
 
-function parseFire(fire: any): Fire {
+function parseFire(fire: FireItem): Fire {
   return {
     id: parseInt(fire.guid),
     title: fire.title,
