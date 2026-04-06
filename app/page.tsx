@@ -1,12 +1,12 @@
 "use client";
 
-import mapboxgl, { Map } from "mapbox-gl";
+import mapboxgl, { type Map as MapboxMap } from "mapbox-gl";
 import { useEffect, useRef } from "react";
 import type { Fire } from "./fires/route";
 
 export default function Home() {
   const mapContainerRef = useRef<HTMLDivElement>(null);
-  const mapRef = useRef<Map>(null);
+  const mapRef = useRef<MapboxMap | null>(null);
 
   useEffect(() => {
     if (!mapContainerRef.current) return;
@@ -21,12 +21,14 @@ export default function Home() {
       ],
       fitBoundsOptions: { padding: 15 },
     });
+    const map = mapRef.current;
+    if (!map) return;
 
     fetch("/fires")
       .then((response) => response.json())
       .then((fires: Fire[]) => {
         fires.forEach((fire) => {
-          const marker = new mapboxgl.Marker({
+          new mapboxgl.Marker({
             element: document.createElement("div"),
             className: "marker",
           })
@@ -37,15 +39,17 @@ export default function Home() {
                     <strong>${fire.title}</strong>
                     <p>${fire.description}</p>
                     <a href="${fire.link}" target="_blank">More info</a>
-                `
-              )
+                `,
+              ),
             )
-            .addTo(mapRef.current!);
-
+            .addTo(map);
         });
       });
 
-    return mapRef.current?.remove;
+    return () => {
+      map.remove();
+      mapRef.current = null;
+    };
   }, []);
 
   return <div className="map" ref={mapContainerRef} />;

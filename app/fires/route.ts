@@ -29,17 +29,17 @@ export async function GET() {
 
 function parseFire(fire: FireItem): Fire {
   return {
-    id: parseInt(fire.guid),
+    id: parseInt(fire.guid, 10),
     title: fire.title,
     description:
       fire.description.match(/overview:([^\n]+)/i)?.[1]?.trim() ||
       "No information available.",
     link: fire.link,
     latitude: parseCoordinate(
-      fire.description.match(/latitude:([^a-z]+)/i)?.[1] || "0"
+      fire.description.match(/latitude:([^a-z]+)/i)?.[1] || "0",
     ),
     longitude: -parseCoordinate(
-      fire.description.match(/longitude:([^a-z]+)/i)?.[1] || "0"
+      fire.description.match(/longitude:([^a-z]+)/i)?.[1] || "0",
     ),
   };
 }
